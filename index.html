@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Outfit Match</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- LOGIN PAGE -->
+    <section id="loginPage" class="screen active">
+      <div class="login-layout">
+        <div class="brand-panel">
+          <div class="brand-logo">OM</div>
+          <h1>Outfit Match</h1>
+          <p>
+            Detect your face tone, upload your wardrobe, and get only the best outfit suggestions that suit your skin tone.
+          </p>
+        </div>
+
+        <form id="loginForm" class="glass-card login-card">
+          <h2>Login</h2>
+
+          <div class="input-group">
+            <label for="userName">Name</label>
+            <input type="text" id="userName" placeholder="Enter your name" />
+          </div>
+
+          <div class="input-group">
+            <label for="mobile">Mobile Number</label>
+            <input type="tel" id="mobile" placeholder="Enter 10 digit number" maxlength="10" />
+          </div>
+
+          <button type="submit" class="primary-btn">Continue</button>
+          <p id="loginError" class="error-text"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- PHOTO PAGE -->
+    <section id="photoPage" class="screen">
+      <div class="glass-card photo-card">
+        <div class="step-badge">Step 2</div>
+        <h2>Add Your Face Photo</h2>
+        <p class="sub-text">
+          Use selfie camera or upload a clear portrait. The app accepts only face-like photos for skin tone detection.
+        </p>
+
+        <div class="choice-grid">
+          <button id="openCameraBtn" class="choice-box button-choice" type="button">
+            <div class="choice-icon">🤳</div>
+            <h3>Take Selfie</h3>
+            <p>Open camera and capture your face</p>
+          </button>
+
+          <label class="choice-box" for="uploadInput">
+            <div class="choice-icon">🖼️</div>
+            <h3>Upload Photo</h3>
+            <p>Select a front-face photo from device</p>
+          </label>
+        </div>
+
+        <input type="file" id="uploadInput" accept="image/*" hidden />
+
+        <div id="cameraBox" class="camera-box">
+          <video id="cameraVideo" autoplay playsinline></video>
+          <div class="camera-actions">
+            <button id="captureSelfieBtn" class="primary-btn" type="button">Take Photo</button>
+            <button id="closeCameraBtn" class="secondary-btn" type="button">Close Camera</button>
+          </div>
+        </div>
+
+        <div class="preview-area" id="previewArea">
+          <img id="previewImage" alt="Preview" />
+        </div>
+
+        <div class="action-row">
+          <button id="analyzeBtn" class="primary-btn" disabled>Detect Face Tone</button>
+          <button id="removePhotoBtn" class="secondary-btn" type="button">Remove Photo</button>
+        </div>
+
+        <div id="analysisResult" class="result-box">No photo selected yet.</div>
+        <div id="faceGuide" class="face-guide">
+          Use a clear front-face selfie or portrait photo. Shirts or random images will be rejected.
+        </div>
+      </div>
+    </section>
+
+    <!-- HOME PAGE -->
+    <section id="homePage" class="screen">
+      <header class="topbar">
+        <div>
+          <h2>Outfit Match</h2>
+          <p id="themeLine">Your personal tone theme is active</p>
+        </div>
+
+        <button id="profileBtn" class="profile-btn" type="button">
+          <img id="topProfileImg" src="" alt="Profile" />
+        </button>
+      </header>
+
+      <main class="home-main">
+        <section class="glass-card user-banner">
+          <div class="user-banner-left">
+            <img id="homeUserPhoto" class="user-banner-photo" src="" alt="User Photo" />
+            <div>
+              <h3 id="homeUserName">User Name</h3>
+              <p id="homeToneName">Face Tone</p>
+            </div>
+          </div>
+
+          <div class="skin-tone-box">
+            <span>Skin Tone Color</span>
+            <div id="skinTonePreview" class="skin-tone-preview"></div>
+            <strong id="skinHexText">#000000</strong>
+          </div>
+        </section>
+
+        <div class="glass-card">
+          <div class="section-title-row">
+            <h3>Search Uploaded Clothes</h3>
+            <p>Quickly hide or show clothing categories</p>
+          </div>
+          <input type="text" id="clothSearchInput" class="search-input" placeholder="Search shirt, t-shirt, pant, shorts..." />
+        </div>
+
+        <section class="upload-section">
+          <div class="section-title-row">
+            <h3>Upload Upper Wear</h3>
+            <p>You can upload unlimited shirt and t-shirt photos</p>
+          </div>
+
+          <div class="upload-grid">
+            <div class="glass-card cloth-card" data-category-card="shirt">
+              <h4>Upload Shirts</h4>
+              <label class="cloth-upload" for="shirtInput">
+                <span>Choose Shirt Photos</span>
+              </label>
+              <input type="file" id="shirtInput" accept="image/*" multiple hidden />
+              <div id="shirtGallery" class="thumb-gallery"></div>
+              <button id="clearShirtsBtn" class="secondary-btn clear-btn" type="button">Clear All Shirts</button>
+            </div>
+
+            <div class="glass-card cloth-card" data-category-card="tshirt">
+              <h4>Upload T-Shirts</h4>
+              <label class="cloth-upload" for="tshirtInput">
+                <span>Choose T-Shirt Photos</span>
+              </label>
+              <input type="file" id="tshirtInput" accept="image/*" multiple hidden />
+              <div id="tshirtGallery" class="thumb-gallery"></div>
+              <button id="clearTshirtsBtn" class="secondary-btn clear-btn" type="button">Clear All T-Shirts</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="upload-section">
+          <div class="section-title-row">
+            <h3>Upload Lower Wear</h3>
+            <p>You can upload unlimited pant, night pant and shorts photos</p>
+          </div>
+
+          <div class="upload-grid lower-grid">
+            <div class="glass-card cloth-card" data-category-card="pant">
+              <h4>Upload Pants</h4>
+              <label class="cloth-upload" for="pantInput">
+                <span>Choose Pant Photos</span>
+              </label>
+              <input type="file" id="pantInput" accept="image/*" multiple hidden />
+              <div id="pantGallery" class="thumb-gallery"></div>
+              <button id="clearPantsBtn" class="secondary-btn clear-btn" type="button">Clear All Pants</button>
+            </div>
+
+            <div class="glass-card cloth-card" data-category-card="nightpant">
+              <h4>Upload Night Pants</h4>
+              <label class="cloth-upload" for="nightPantInput">
+                <span>Choose Night Pant Photos</span>
+              </label>
+              <input type="file" id="nightPantInput" accept="image/*" multiple hidden />
+              <div id="nightPantGallery" class="thumb-gallery"></div>
+              <button id="clearNightPantsBtn" class="secondary-btn clear-btn" type="button">Clear All Night Pants</button>
+            </div>
+
+            <div class="glass-card cloth-card" data-category-card="shorts">
+              <h4>Upload Shorts</h4>
+              <label class="cloth-upload" for="shortsInput">
+                <span>Choose Shorts Photos</span>
+              </label>
+              <input type="file" id="shortsInput" accept="image/*" multiple hidden />
+              <div id="shortsGallery" class="thumb-gallery"></div>
+              <button id="clearShortsBtn" class="secondary-btn clear-btn" type="button">Clear All Shorts</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="glass-card suggestion-section">
+          <div class="section-title-row">
+            <h3>Best Outfit Suggestions</h3>
+            <p>Only best-of-best looks for your skin tone</p>
+          </div>
+
+          <div id="suggestionEmptyState" class="suggestion-empty">
+            Upload at least one upper wear and one lower wear to get matching suggestions.
+          </div>
+
+          <div id="suggestionGrid" class="suggestion-grid"></div>
+        </section>
+      </main>
+    </section>
+
+    <!-- PROFILE MODAL -->
+    <div id="profileModal" class="modal">
+      <div class="modal-card">
+        <button id="closeProfileBtn" class="close-btn" type="button">×</button>
+
+        <img id="profileModalImg" class="modal-user-img" src="" alt="Profile" />
+        <h3 id="profileModalName">User Name</h3>
+        <p id="profileModalTone">Face Tone: --</p>
+        <p id="profileModalTheme">Theme: --</p>
+
+        <button id="logoutBtn" class="logout-btn" type="button">Log Out</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastBox" class="toast-box"></div>
+
+  <div id="loadingOverlay" class="loading-overlay">
+    <div class="loading-card">
+      <div class="loader-spinner"></div>
+      <p id="loadingText">Processing...</p>
+    </div>
+  </div>
+
+  <canvas id="imageCanvas" hidden></canvas>
+  <canvas id="cameraCanvas" hidden></canvas>
+
+  <script src="script.js"></script>
+</body>
+</html>
